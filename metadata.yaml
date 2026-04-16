@@ -1,0 +1,8 @@
+name: astrbot_plugin_currency
+display_name: 数字货币价格查询和提醒插件
+desc: 这是一个基于 AstrBot 框架开发的数字货币价格查询和提醒插件，支持实时查询 BTC、ETH 等主流数字货币价格，并支持设置价格突破提醒。【清空提醒后再更改,不然会生成多个循环,容易被封ip】
+help: 略
+version: v1.0.1
+author: 苏澜
+repo: https://github.com/sulan-hub/astrbot_plugin_currency
+

@@ -1,0 +1,7 @@
+{
+    "check_interval": {
+        "type": "int",
+        "description": "监控检查间隔 (秒)\n清空提醒后再更改此值",
+        "default": 1800
+    }
+}
