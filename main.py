@@ -139,7 +139,7 @@ class MyPlugin(Star):
             logger.info(f"{symbol} 价格提醒检查中，间隔1800秒")
             check_interval = self.config.get("check_interval", 1800)
             logger.info(f"{check_interval}秒")
-            await asyncio.sleep(10)  # 检查间隔秒
+            await asyncio.sleep(check_interval)  # 检查间隔秒
 
     def save_reminders(self):
         """保存提醒任务到文件"""
