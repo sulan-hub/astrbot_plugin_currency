@@ -107,12 +107,12 @@ class MyPlugin(Star):
                 triggered = False
                 if direction == "上" and current_price >= target_price:
                     triggered = True
-                    message = f"🔔 **价格提醒**\n{symbol} 已上涨至 ${current_price:,.2f}\n目标价格: ${target_price:,.2f}"
-                    logger.info(f"{symbol} 已上涨至 ${current_price:,.2f}")
+                    message = f"🔔 **价格提醒**\n{symbol} 已上涨至 ${current_price}\n目标价格: ${target_price}"
+                    logger.info(f"{symbol} 已上涨至 ${current_price}")
                 elif direction == "下" and current_price <= target_price:
                     triggered = True
-                    message = f"🔔 **价格提醒**\n{symbol} 已下跌至 ${current_price:,.2f}\n目标价格: ${target_price:,.2f}"
-                    logger.info(f"{symbol} 已下跌至 ${current_price:,.2f}")
+                    message = f"🔔 **价格提醒**\n{symbol} 已下跌至 ${current_price}\n目标价格: ${target_price}"
+                    logger.info(f"{symbol} 已下跌至 ${current_price}")
                 
                 if triggered:
                     # 使用存储的 unified_msg_origin 发送主动消息
@@ -206,7 +206,7 @@ class MyPlugin(Star):
             yield result
 
     @filter.command("DOGE")
-    async def get_doge_price(self, event: AstrMessageEvent):
+    async def get_doge_price(self, event: AstrMessageEvent):  # ✅ 修正函数名
         '''获取DOGE当前价格，格式：/DOGE'''
         async for result in self.fapi(event, "DOGE"):
             yield result
@@ -247,10 +247,10 @@ class MyPlugin(Star):
             
             # 检查提醒是否合理
             if direction == "上" and current_price >= target_price:
-                yield event.plain_result(f"⚠️ {symbol} 当前价格 ${current_price:,.2f} 已经高于目标价格 ${target_price:,.2f}")
+                yield event.plain_result(f"⚠️ {symbol} 当前价格 ${current_price} 已经高于目标价格 ${target_price}")
                 return
             elif direction == "下" and current_price <= target_price:
-                yield event.plain_result(f"⚠️ {symbol} 当前价格 ${current_price:,.2f} 已经低于目标价格 ${target_price:,.2f}")
+                yield event.plain_result(f"⚠️ {symbol} 当前价格 ${current_price} 已经低于目标价格 ${target_price}")
                 return
             
             # 获取 unified_msg_origin 和 user_id
@@ -272,8 +272,8 @@ class MyPlugin(Star):
             yield event.plain_result(
                 f"✅ 已设置提醒！\n"
                 f"币种: {symbol}\n"
-                f"当前价格: ${current_price:,.2f}\n"
-                f"目标价格: ${target_price:,.2f}\n"
+                f"当前价格: ${current_price}\n"
+                f"目标价格: ${target_price}\n"
                 f"提醒条件: 价格向{direction}突破\n"
                 f"检查间隔: {check_interval}秒"
             )
@@ -317,7 +317,7 @@ class MyPlugin(Star):
                 if task_id in self.umo_storage:
                     del self.umo_storage[task_id]
                 self.save_reminders()
-                yield event.plain_result(f"✅ 已取消 {symbol} 向{direction}突破 ${target_price:,.2f} 的提醒")
+                yield event.plain_result(f"✅ 已取消 {symbol} 向{direction}突破 ${target_price} 的提醒")
             else:
                 # 提供可能的近似匹配
                 await self._suggest_similar_reminders(event, symbol, target_price, direction)
@@ -349,7 +349,7 @@ class MyPlugin(Star):
         if user_tasks:
             result = "📋 **您的提醒列表**\n"
             for i, task in enumerate(user_tasks, 1):
-                result += f"{i}. {task['symbol']} 向{task['direction']}突破 ${float(task['price']):,.2f}\n"
+                result += f"{i}. {task['symbol']} 向{task['direction']}突破 ${float(task['price'])}\n"
             result += "\n取消提醒：/取消 <价格> <币种> <上/下>\n"
             yield event.plain_result(result)
         else:
@@ -368,10 +368,10 @@ class MyPlugin(Star):
         
         if similar_tasks:
             similar_prices = sorted(similar_tasks)
-            result = f"❌ 未找到 {symbol} 向{direction}突破 ${target_price:,.2f} 的提醒\n\n"
+            result = f"❌ 未找到 {symbol} 向{direction}突破 ${target_price} 的提醒\n\n"
             result += f"您当前 {symbol} 向{direction}突破的提醒有：\n"
             for price in similar_prices:
-                result += f"  • ${price:,.2f}\n"
+                result += f"  • ${price}\n"
             yield event.plain_result(result)
         else:
             yield event.plain_result(f"❌ 未找到对应的提醒任务\n\n查看所有提醒：/提醒列表")
