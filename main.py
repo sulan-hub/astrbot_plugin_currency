@@ -206,7 +206,7 @@ class MyPlugin(Star):
             yield result
 
     @filter.command("DOGE")
-    async def get_doge_price(self, event: AstrMessageEvent):  # ✅ 修正函数名
+    async def get_doge_price(self, event: AstrMessageEvent):
         '''获取DOGE当前价格，格式：/DOGE'''
         async for result in self.fapi(event, "DOGE"):
             yield result
