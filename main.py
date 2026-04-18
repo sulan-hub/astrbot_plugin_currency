@@ -62,7 +62,7 @@ class MyPlugin(Star):
                             change_7d = float(ticker['priceChangePercent7d'])
                             
                             result = f"💰 **{symbol}/USDT 实时价格**\n"
-                            result += f"📊 最新价格: ${price:,.2f}\n"
+                            result += f"📊 最新价格: $ {price}\n"
                             result += f"📈 24h涨跌: {change_24h:+.2f}%\n"
                             result += f"🔥 7d涨跌: {change_7d:+.2f}%\n"
                             result += f"🕐 更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
@@ -203,6 +203,12 @@ class MyPlugin(Star):
     async def get_btc_price(self, event: AstrMessageEvent):
         '''获取BTC当前价格，格式：/BTC'''
         async for result in self.fapi(event, "BTC"):
+            yield result
+
+    @filter.command("DOGE")
+    async def get_doge_price(self, event: AstrMessageEvent):  # ✅ 修正函数名
+        '''获取DOGE当前价格，格式：/DOGE'''
+        async for result in self.fapi(event, "DOGE"):
             yield result
 
     @filter.command("提醒")
