@@ -7,7 +7,7 @@ from datetime import datetime
 import aiohttp
 import asyncio
 
-@register("currency", "苏澜", "数字货币价格查询和提醒\t【清空提醒后再更改,不然会生成多个循环,容易被封ip】", "1.0.1")
+@register("currency", "sulan", "数字货币价格查询和提醒\t【清空提醒后再更改,不然会生成多个循环,容易被封ip】", "1.0.2")
 class MyPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
@@ -206,7 +206,7 @@ class MyPlugin(Star):
             yield result
 
     @filter.command("DOGE")
-    async def get_doge_price(self, event: AstrMessageEvent):  # ✅ 修正函数名
+    async def get_doge_price(self, event: AstrMessageEvent):
         '''获取DOGE当前价格，格式：/DOGE'''
         async for result in self.fapi(event, "DOGE"):
             yield result
